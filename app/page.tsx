@@ -99,27 +99,27 @@ export default function Home() {
   const reset = () => { setParsedQuote(null); setError(''); setFileName(''); if(fileInputRef.current) fileInputRef.current.value=''; };
   return (
     <main className="min-h-screen bg-[#1B2A4A] text-white">
-      <div className="bg-[#162238] border-b-2 border-[#E8A020] px-6 py-3 flex items-center justify-between">
-        <div className="font-black text-lg tracking-widest uppercase">Quote<span className="text-[#E8A020]">Vault</span></div>
-        <div className="text-xs text-gray-500 tracking-widest uppercase">Crest Sales Suite</div>
+      <div className="bg-[#162238] border-b-2 border-[#4cc458] px-6 py-3 flex items-center justify-between">
+        <div className="font-black text-lg tracking-widest uppercase">Quote<span className="text-[#4cc458]">Vault</span></div>
+        <a href="https://crestsalessuite.com" target="_blank" className="text-xs text-gray-500 hover:text-[#4cc458] tracking-widest uppercase transition-colors border border-gray-700 hover:border-[#4cc458] px-3 py-1 rounded-full">Crest Sales Suite</a>
       </div>
       <div className="max-w-3xl mx-auto px-6 py-12">
         <div className="text-center mb-10">
-          <div className="text-xs font-bold tracking-[0.25em] uppercase text-[#C4952A] mb-3">Protect Your Takeoff</div>
-          <h1 className="text-4xl font-black mb-4 leading-tight">Upload any quote.<br/><span className="text-[#E8A020]">Lock the details.</span></h1>
+          <div className="text-xs font-bold tracking-[0.25em] uppercase text-[#34a840] mb-3">Protect Your Takeoff</div>
+          <h1 className="text-4xl font-black mb-4 leading-tight">Upload any quote.<br/><span className="text-[#4cc458]">Lock the details.</span></h1>
           <p className="text-gray-400 max-w-lg mx-auto leading-relaxed">Drop in any supplier quote PDF and get a clean summary — no line items exposed.</p>
         </div>
         {error&&<div className="bg-red-900/20 border border-red-700 rounded-lg p-4 mb-6 text-red-300 text-sm">{error}</div>}
         {!isProcessing&&!parsedQuote&&(
-          <label className={`block border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all mb-8 ${isDragging?'border-[#E8A020] bg-red-900/10':'border-gray-700 hover:border-[#E8A020] hover:bg-red-900/5'}`} onDragOver={(e)=>{e.preventDefault();setIsDragging(true);}} onDragLeave={()=>setIsDragging(false)} onDrop={handleDrop}>
+          <label className={`block border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all mb-8 ${isDragging?'border-[#4cc458] bg-red-900/10':'border-gray-700 hover:border-[#4cc458] hover:bg-red-900/5'}`} onDragOver={(e)=>{e.preventDefault();setIsDragging(true);}} onDragLeave={()=>setIsDragging(false)} onDrop={handleDrop}>
             <input ref={fileInputRef} type="file" accept=".pdf" className="hidden" onChange={(e)=>{const f=e.target.files?.[0];if(f)handleFile(f);}}/>
-            <div className="w-14 h-14 bg-[#E8A020] rounded-full flex items-center justify-center mx-auto mb-4"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5z"/></svg></div>
+            <div className="w-14 h-14 bg-[#4cc458] rounded-full flex items-center justify-center mx-auto mb-4"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5z"/></svg></div>
             <div className="text-lg font-bold mb-2">Click to select your quote PDF</div>
             <div className="text-gray-500 text-sm mb-6">or drag and drop it here</div>
-            <span className="inline-block bg-[#E8A020] text-white font-bold text-sm px-6 py-3 rounded-lg uppercase tracking-widest">Browse for PDF</span>
+            <span className="inline-block bg-[#4cc458] text-white font-bold text-sm px-6 py-3 rounded-lg uppercase tracking-widest">Browse for PDF</span>
           </label>
         )}
-        {isProcessing&&(<div className="bg-[#162238] border border-gray-800 rounded-xl p-10 text-center mb-8"><div className="w-10 h-10 border-2 border-gray-700 border-t-[#E8A020] rounded-full animate-spin mx-auto mb-4"/><div className="font-bold tracking-widest uppercase text-sm text-gray-400 mb-1">Processing Quote</div><div className="text-gray-600 text-sm">{processingStep}</div></div>)}
+        {isProcessing&&(<div className="bg-[#162238] border border-gray-800 rounded-xl p-10 text-center mb-8"><div className="w-10 h-10 border-2 border-gray-700 border-t-[#4cc458] rounded-full animate-spin mx-auto mb-4"/><div className="font-bold tracking-widest uppercase text-sm text-gray-400 mb-1">Processing Quote</div><div className="text-gray-600 text-sm">{processingStep}</div></div>)}
         {parsedQuote&&(
           <div className="bg-[#162238] border border-gray-800 rounded-xl overflow-hidden mb-8">
             <div className="bg-[#162238] px-6 py-4 flex items-center gap-3 border-b border-gray-800">
@@ -128,28 +128,28 @@ export default function Home() {
             </div>
             <div className="p-6">
               <div className="grid grid-cols-3 gap-3 mb-6">
-                {[{label:'Quote #',value:'#'+parsedQuote.quoteNumber},{label:'Quote Date',value:parsedQuote.quoteDate},{label:'Expiry Date',value:parsedQuote.expiryDate},{label:'Customer',value:parsedQuote.customer},{label:'Sales Rep',value:parsedQuote.salesRep},{label:'Contact',value:parsedQuote.contact}].map(f=>(<div key={f.label} className="bg-[#1B2A4A] rounded-lg p-3 border-l-2 border-[#E8A020]"><div className="text-[10px] uppercase tracking-widest text-gray-500 mb-1">{f.label}</div><div className="font-bold text-sm">{f.value||'—'}</div></div>))}
+                {[{label:'Quote #',value:'#'+parsedQuote.quoteNumber},{label:'Quote Date',value:parsedQuote.quoteDate},{label:'Expiry Date',value:parsedQuote.expiryDate},{label:'Customer',value:parsedQuote.customer},{label:'Sales Rep',value:parsedQuote.salesRep},{label:'Contact',value:parsedQuote.contact}].map(f=>(<div key={f.label} className="bg-[#1B2A4A] rounded-lg p-3 border-l-2 border-[#4cc458]"><div className="text-[10px] uppercase tracking-widest text-gray-500 mb-1">{f.label}</div><div className="font-bold text-sm">{f.value||'—'}</div></div>))}
               </div>
               <div className="mb-4">
                 <div className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-3">Scope of Work</div>
-                {parsedQuote.sections.map((s,i)=>(<div key={i} className="flex justify-between py-2 border-b border-gray-800 text-sm last:border-0"><span className="text-gray-300">{s.name}</span><span className={`font-bold ${s.amount==='—'?'text-gray-600':'text-[#E8A020]'}`}>{s.amount}</span></div>))}
+                {parsedQuote.sections.map((s,i)=>(<div key={i} className="flex justify-between py-2 border-b border-gray-800 text-sm last:border-0"><span className="text-gray-300">{s.name}</span><span className={`font-bold ${s.amount==='—'?'text-gray-600':'text-[#4cc458]'}`}>{s.amount}</span></div>))}
               </div>
-              <div className="bg-[#E8A020] rounded-lg p-4 flex justify-between items-center mb-6"><div className="font-bold uppercase tracking-wider text-sm">Quote Total (incl. tax)</div><div className="font-black text-2xl">{parsedQuote.total||'—'}</div></div>
+              <div className="bg-[#4cc458] rounded-lg p-4 flex justify-between items-center mb-6"><div className="font-bold uppercase tracking-wider text-sm">Quote Total (incl. tax)</div><div className="font-black text-2xl">{parsedQuote.total||'—'}</div></div>
               <div className="flex gap-3 flex-wrap">
-                <button onClick={generatePDF} className="bg-[#E8A020] hover:bg-[#C4952A] text-white font-bold text-sm px-6 py-3 rounded-lg uppercase tracking-widest transition-all flex items-center gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5z"/></svg>Download Summary PDF</button>
-                <button onClick={reset} className="border border-[#E8A020]/30 hover:border-[#E8A020] text-gray-400 hover:text-white font-bold text-sm px-6 py-3 rounded-lg uppercase tracking-widest transition-all">Upload Another</button>
+                <button onClick={generatePDF} className="bg-[#4cc458] hover:bg-[#34a840] text-white font-bold text-sm px-6 py-3 rounded-lg uppercase tracking-widest transition-all flex items-center gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5z"/></svg>Download Summary PDF</button>
+                <button onClick={reset} className="border border-[#4cc458]/30 hover:border-[#4cc458] text-gray-400 hover:text-white font-bold text-sm px-6 py-3 rounded-lg uppercase tracking-widest transition-all">Upload Another</button>
               </div>
             </div>
           </div>
         )}
         {/* Logo Upload Section */}
-        <div className="bg-[#162238] border border-[#E8A020]/20 rounded-xl p-5 mb-6">
+        <div className="bg-[#162238] border border-[#4cc458]/20 rounded-xl p-5 mb-6">
           <div className="flex items-center justify-between mb-3">
             <div>
               <div className="font-bold text-sm text-white mb-1">🏢 Your Company Logo</div>
               <div className="text-xs text-gray-500">Appears in the top left of every summary PDF</div>
             </div>
-            {logoDataUrl && <div className="text-xs text-[#E8A020] font-bold">✓ Logo loaded</div>}
+            {logoDataUrl && <div className="text-xs text-[#4cc458] font-bold">✓ Logo loaded</div>}
           </div>
           {logoDataUrl ? (
             <div className="flex items-center gap-3">
@@ -159,24 +159,24 @@ export default function Home() {
             </div>
           ) : (
             <div className="flex items-center gap-3">
-              <label className="cursor-pointer bg-[#E8A020] hover:bg-[#C4952A] text-white font-bold text-xs px-4 py-2 rounded-lg uppercase tracking-widest transition-all">
+              <label className="cursor-pointer bg-[#4cc458] hover:bg-[#34a840] text-white font-bold text-xs px-4 py-2 rounded-lg uppercase tracking-widest transition-all">
                 <input ref={logoInputRef} type="file" accept="image/*" className="hidden" onChange={(e)=>{const f=e.target.files?.[0];if(f)handleLogoUpload(f);}} />
                 Upload Logo
               </label>
               <span className="text-gray-600 text-xs">PNG, JPG, or SVG — transparent background works best</span>
             </div>
           )}
-          <div className="mt-3 pt-3 border-t border-gray-800 text-xs text-gray-600">Want to save your logo permanently? <span className="text-[#E8A020] hover:underline"><a href="/pricing">Create a free QuoteVault account →</a></span></div>
+          <div className="mt-3 pt-3 border-t border-gray-800 text-xs text-gray-600">Want to save your logo permanently? <span className="text-[#4cc458] hover:underline"><a href="/pricing">Create a free QuoteVault account →</a></span></div>
         </div>
-        {!parsedQuote&&!isProcessing&&(<div className="grid grid-cols-3 gap-6 mt-12 pt-10 border-t border-gray-800">{[{num:'01',title:'Upload Any Quote',desc:'Drop in any supplier PDF - BisTrack, CDK, or any format.'},{num:'02',title:'AI Parses It',desc:'Claude AI reads the quote and extracts all the key data.'},{num:'03',title:'Download Summary',desc:'Get a branded PDF with totals only - no line items exposed.'}].map(s=>(<div key={s.num} className="border-l-2 border-[#E8A020] pl-4"><div className="text-3xl font-black text-[#E8A020] leading-none mb-2">{s.num}</div><div className="font-bold text-sm mb-1">{s.title}</div><div className="text-gray-500 text-xs leading-relaxed">{s.desc}</div></div>))}</div>)}
+        {!parsedQuote&&!isProcessing&&(<div className="grid grid-cols-3 gap-6 mt-12 pt-10 border-t border-gray-800">{[{num:'01',title:'Upload Any Quote',desc:'Drop in any supplier PDF - BisTrack, CDK, or any format.'},{num:'02',title:'AI Parses It',desc:'Claude AI reads the quote and extracts all the key data.'},{num:'03',title:'Download Summary',desc:'Get a branded PDF with totals only - no line items exposed.'}].map(s=>(<div key={s.num} className="border-l-2 border-[#4cc458] pl-4"><div className="text-3xl font-black text-[#4cc458] leading-none mb-2">{s.num}</div><div className="font-bold text-sm mb-1">{s.title}</div><div className="text-gray-500 text-xs leading-relaxed">{s.desc}</div></div>))}</div>)}
       </div>
         <footer className="mt-16 pt-8 border-t border-gray-800 text-center">
           <p className="text-gray-600 text-xs mb-2">© 2026 Crest Sales Suite. All rights reserved. QuoteVault™ is a trademark of Crest Sales Suite.</p>
           <div className="flex justify-center gap-6 text-xs">
-            <a href="/pricing" className="text-gray-600 hover:text-[#E8A020] transition-colors">Pricing</a>
-            <a href="/legal" className="text-gray-600 hover:text-[#E8A020] transition-colors">Terms of Service</a>
-            <a href="/legal" className="text-gray-600 hover:text-[#E8A020] transition-colors">Privacy Policy</a>
-            <a href="https://crestsalessuite.com" className="text-gray-600 hover:text-[#E8A020] transition-colors">Crest Sales Suite</a>
+            <a href="/pricing" className="text-gray-600 hover:text-[#4cc458] transition-colors">Pricing</a>
+            <a href="/legal" className="text-gray-600 hover:text-[#4cc458] transition-colors">Terms of Service</a>
+            <a href="/legal" className="text-gray-600 hover:text-[#4cc458] transition-colors">Privacy Policy</a>
+            <a href="https://crestsalessuite.com" className="text-gray-600 hover:text-[#4cc458] transition-colors">Crest Sales Suite</a>
           </div>
         </footer>
     </main>
