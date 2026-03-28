@@ -14,12 +14,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
-    // Convert file to base64
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     const base64 = buffer.toString('base64');
 
-    // Send to Claude for parsing
     const response = await client.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 2000,
@@ -37,34 +35,52 @@ export async function POST(request: NextRequest) {
             },
             {
               type: 'text',
-              text: `You are parsing a supplier quote PDF. Extract the following information and return it as JSON only, no other text:
+              text: `You are an expert at reading supplier quotes from the building materials and construction industry. Your job is to extract key information and produce a clean customer-facing summary that hides all line-item details, quantities, unit prices, and product codes.
 
+Analyze this quote PDF carefully and return ONLY a JSON object with no other text, markdown, or code fences.
+
+INSTRUCTIONS:
+1. Find the supplier/company name, address, and phone number
+2. Find the quote number, quote date, expiry date
+3. Find the customer name, contact name, contact phone
+4. Find the invoice address and delivery address
+5. Find the project/job name if present
+6. Find the sales rep name
+7. For the sections array: 
+   - If the quote has clear sections with subtotals (like "End of FOUNDATION $2,343.73"), use those exact sections
+   - If the quote has NO clear sections (flat list of line items), identify the TOP 5-6 largest dollar amount line items or allowances and list them as category names with their amounts. Group similar items together and give them a descriptive category name (e.g. "Roof Trusses Allowance", "Decking Materials", "Framing Lumber", "Hardware & Connectors", "Pressure Treated Materials", "Subfloor Materials"). Do NOT show product codes or specific item descriptions.
+8. Find the subtotal (before tax), sales tax amount, and grand total
+9. Find any exclusions or items explicitly noted as not included
+10. For the quoteType field: use "sectioned" if the quote has clear sections, or "flat" if it's a flat line item list
+
+Return this exact JSON structure:
 {
-  "quoteNumber": "the quote/order number",
-  "quoteDate": "date of the quote formatted as Month DD, YYYY",
-  "expiryDate": "expiry date formatted as Month DD, YYYY",
+  "supplierName": "the PRIMARY company name only - if there are two logos or company names, use just the first/main one. Keep it short and clean.",
+  "supplierAddress": "supplier address on one line",
+  "supplierPhone": "supplier phone number",
+  "quoteNumber": "quote/order number",
+  "quoteDate": "formatted as Month DD, YYYY",
+  "expiryDate": "formatted as Month DD, YYYY",
   "salesRep": "sales rep name",
   "contact": "customer contact name",
   "contactPhone": "contact phone number",
-  "customer": "customer/company name",
-  "invoiceAddress": "full invoice address on one line",
-  "deliveryAddress": "full delivery address on one line",
-  "projectName": "project name or job site name if present",
+  "customer": "customer or company name",
+  "invoiceAddress": "full invoice/bill-to address on one line",
+  "deliveryAddress": "full ship-to/delivery address on one line",
+  "projectName": "project or job name if present, otherwise empty string",
+  "quoteType": "sectioned or flat",
   "sections": [
-    {"name": "section name", "amount": "$X,XXX.XX"}
+    {"name": "descriptive category name", "amount": "$X,XXX.XX"}
   ],
-  "subtotal": "$XXX,XXX.XX",
-  "salesTax": "$X,XXX.XX", 
-  "total": "$XXX,XXX.XX",
+  "subtotal": "$XX,XXX.XX",
+  "salesTax": "$X,XXX.XX",
+  "total": "$XX,XXX.XX",
   "exclusions": ["list", "of", "excluded", "items"],
-  "supplierName": "name of the supplier/company issuing the quote",
-  "supplierPhone": "supplier phone number",
-  "supplierAddress": "supplier address"
+  "terms": "any return policy, validity terms, or special conditions noted at the bottom of the quote. If none found, use: Prices for in-stock items are valid for 7 days. Special-order materials may be subject to price adjustments due to applicable tariffs at time of shipment.",
+  "terms": "any return policy, validity terms, or special conditions noted at the bottom of the quote. If none found, use: Prices for in-stock items are valid for 7 days. Special-order materials may be subject to price adjustments due to applicable tariffs at time of shipment."
 }
 
-For sections, look for section subtotals or category totals. Include all sections with their dollar amounts. If a section has no dollar amount, use "—".
-For exclusions, look for any items explicitly listed as not included.
-Return ONLY valid JSON, nothing else.`,
+IMPORTANT: Return ONLY the JSON object. No markdown, no code fences, no explanation.`,
             },
           ],
         },
@@ -76,9 +92,8 @@ Return ONLY valid JSON, nothing else.`,
       throw new Error('Unexpected response type');
     }
 
-    // Parse the JSON response
     const cleaned = content.text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-const parsed = JSON.parse(cleaned);
+    const parsed = JSON.parse(cleaned);
     return NextResponse.json(parsed);
 
   } catch (error) {
