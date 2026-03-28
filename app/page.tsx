@@ -166,13 +166,14 @@ export default function Home() {
               <span className="text-gray-600 text-xs">PNG, JPG, or SVG — transparent background works best</span>
             </div>
           )}
-          <div className="mt-3 pt-3 border-t border-gray-800 text-xs text-gray-600">Want to save your logo permanently? <span className="text-[#E8A020] cursor-pointer hover:underline">Create a free QuoteVault account →</span></div>
+          <div className="mt-3 pt-3 border-t border-gray-800 text-xs text-gray-600">Want to save your logo permanently? <span className="text-[#E8A020] hover:underline"><a href="/pricing">Create a free QuoteVault account →</a></span></div>
         </div>
-        {!parsedQuote&&!isProcessing&&(<div className="grid grid-cols-3 gap-6 mt-12 pt-10 border-t border-gray-800">{[{num:'01',title:'Upload Any Quote',desc:'Drop in any supplier PDF - BisTrack, CDK, or any format.'},{num:'02',title:'AI Parses It',desc:'Claude AI reads the quote and extracts all the key data.'},{num:'03',title:'Download Summary',desc:'Get a branded PDF with totals only - no line items exposed.'}].map(s=>(<div key={s.num} className="border-l-2 border-gray-800 pl-4"><div className="text-3xl font-black text-gray-800 leading-none mb-2">{s.num}</div><div className="font-bold text-sm mb-1">{s.title}</div><div className="text-gray-500 text-xs leading-relaxed">{s.desc}</div></div>))}</div>)}
+        {!parsedQuote&&!isProcessing&&(<div className="grid grid-cols-3 gap-6 mt-12 pt-10 border-t border-gray-800">{[{num:'01',title:'Upload Any Quote',desc:'Drop in any supplier PDF - BisTrack, CDK, or any format.'},{num:'02',title:'AI Parses It',desc:'Claude AI reads the quote and extracts all the key data.'},{num:'03',title:'Download Summary',desc:'Get a branded PDF with totals only - no line items exposed.'}].map(s=>(<div key={s.num} className="border-l-2 border-[#E8A020] pl-4"><div className="text-3xl font-black text-[#E8A020] leading-none mb-2">{s.num}</div><div className="font-bold text-sm mb-1">{s.title}</div><div className="text-gray-500 text-xs leading-relaxed">{s.desc}</div></div>))}</div>)}
       </div>
         <footer className="mt-16 pt-8 border-t border-gray-800 text-center">
           <p className="text-gray-600 text-xs mb-2">© 2026 Crest Sales Suite. All rights reserved. QuoteVault™ is a trademark of Crest Sales Suite.</p>
           <div className="flex justify-center gap-6 text-xs">
+            <a href="/pricing" className="text-gray-600 hover:text-[#E8A020] transition-colors">Pricing</a>
             <a href="/legal" className="text-gray-600 hover:text-[#E8A020] transition-colors">Terms of Service</a>
             <a href="/legal" className="text-gray-600 hover:text-[#E8A020] transition-colors">Privacy Policy</a>
             <a href="https://crestsalessuite.com" className="text-gray-600 hover:text-[#E8A020] transition-colors">Crest Sales Suite</a>
